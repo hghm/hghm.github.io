@@ -44,6 +44,11 @@
 
 
 
+
+  <!--点击效果-->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src ="/js/clicker.js" ></script>
+  
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -130,6 +135,11 @@
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
         <span class="site-state-item-count">4</span>
@@ -200,7 +210,20 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-10-15 14:45:26 / 修改时间：17:57:18" itemprop="dateCreated datePublished" datetime="2022-10-15T14:45:26+08:00">2022-10-15</time>
+      <time title="创建时间：2022-10-15 14:45:26 / 修改时间：21:19:47" itemprop="dateCreated datePublished" datetime="2022-10-15T14:45:26+08:00">2022-10-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">智能学习</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%99%BA%E8%83%BD%E5%AD%A6%E4%B9%A0/Matter%E6%96%B9%E9%9D%A2/" itemprop="url" rel="index"><span itemprop="name">Matter方面</span></a>
+        </span>
     </span>
 
   
@@ -229,30 +252,14 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>Matter作为物联网通讯中一种应用层连接标准，这两年频繁出现在人们的视野当中，谷歌在今年的 I&#x2F;O开发者大会上宣布，<strong>在Matter协议的支持下，其产品可以实现与众多全球顶级智能家居生态互联互通。</strong><br><img src="/../images/221015/matter.png"><br>无独有偶，苹果在今年的WWDC开发者大会上，同样也宣布HomeKit（苹果公司的一款协议）支持Matter协议。实际上，包括亚马逊，华为，三星在内的很多国内外一线大厂都开始支持Matter协议。</p>
-<p>2019年，苹果、谷歌、亚马逊等巨头共同成立了一个名为“Connected Home Over IP”（简称CHIP）的组织，目的在于开发、制定一套基于IP协议的智能家居连接标准，简化设备与设备之间信息传输过程，这就是Matter的前身。2021年，CHIP正式更名为Matter，从此Matter正式走入了人们的视线。</p>
-<p>Matter是一项非常新的技术，从成立到改名，再到各大厂商相继宣布支持Matter协议，仅仅过去不到3年的时间。Matter有如此大的魅力让各大厂商为它站台，是因为它的出现改变了物联网行业的格局。</p>
-<ul>
-<li><strong>Matter协议的出发点</strong></li>
-</ul>
-<p><em>物联网</em>（Internet of Things，简称 IoT）一词大家并不陌生，早在1991美国麻省理工学院的教授就提出过这一概念，1999年的时候又重新定义了物联网“万物皆可通过网络互联”的基本含义。</p>
-<p>不过事与愿违，由于物联网行业缺少统一的标准规范，各大厂商为了争夺市场份额，意图让用户购买自家全部的物联网设备，纷纷建立起自己的生态壁垒，导致各家产品互不相连，“万物皆可通过网络互联”变成“各个品牌的内部互联”。</p>
-<p>对于用户来说，最直观的感受就是，如果想要建立一套智能家居系统就必须全部使用同一家品牌的设备。这使市场形成恶性竞争，用户购买产品不再以产品力等因素来作为衡量标准，而是以品牌的设备生态大小作为参考。</p>
-<p>这也导致市场上出现了很多背靠大生态、劣质产品有恃无恐的存在，同时一些优秀的产品因为生态不大很难有销量，劣币驱逐良币的状况在物联网设备市场中数见不鲜。</p>
-<p>对于一些中小品牌厂商来说，要想在物联网行业分到一块蛋糕非常不容易。除了难以在市场上中建立自己的生态外，想加入到各大品牌厂商的生态中还需要接入不同平台，这无形之中增加开发成本，拉长产品上市的时间。<strong>虽然物联网行业一直打着万物互联的旗号，实际物联网行业正处于一种群雄割据的局面。</strong></p>
-<p><em><strong>Matter的出现就像秦朝一统六国，让各个国家遵循统一的文字、货币、度量衡。</strong></em>换句话说，Matter减少物联网设备在各个平台之间转换的内耗，设备只需要支持Matter应用层协议即可适配不同品牌的生态。</p>
-<p>举个简单的例子，A厂过去生产的设备为适应谷歌和亚马逊的平台需要分别适配谷歌和亚马逊所对应的生态系统。当A厂支持Matter后，减少了针对不同平台做适配技术成本。</p>
-<p>对于用户最直观的感受就是当用户想要打造一套智能家居时，无需选择唯一品牌或购买额外的转换网关即可让设备之间互通互联。</p>
-<p>物联网通信是很复杂的信息传输，需要很多协议支持。Matter是应用层协议，像我们熟知的WiFi是通信层协议，和WiFi同属于Matter直连通信层的还有Thread，以太网，蜂窝网协议等等，BLE作为设备配网手段被Matter使用。</p>
-<p>而如今比较流行的两种通信协议一种是<strong>WiFi</strong>，另一种是<strong>Thread</strong>。基于Matter实用WiFi技术及叫<strong>Matter over WiFi</strong>，基于Matter使用Thread技术叫<strong>Matter over Thread</strong>。</p>
-<p>如果把Matter看作是铁路交通方式，WiFi就像是高铁，Thread像是地铁。WiFi具有高带宽，高功耗的特性，就像高铁可以把你送到很远的地方，但是耗时长票价也会更贵。Thread就具有低带宽，低功耗的特性，就像地铁虽然只能在本地运输，但是耗时短票价低。</p>
-<p>之所以这两种协议成为主流是因为，二者都支持IP。像在铁路运输网络中，无论是高铁车厢还是地铁车厢都支持在铁轨上运行一样。</p>
-<p>在IP的加持下，Thread利用边界路由器将互联网和其它网络，如以太网，Wi-Fi和蜂窝网扩展到了低功耗终端设备，不用额外的网关做中继转接。</p>
-<p>除了原生支持IP外，Thread得益于其技术的先进性，在其他技术特性也非常优秀。在安全性上，Thread通过DTLS加密授权的节点加入网络，为网络提供用户安全且友好的设备管理，Thread网络内的所有数据包都要求强制性的端到端加密。</p>
-<p>由于Thread低功耗的特性，也使得Thread支持电池供电设备，无需频繁充电或更换电池，如日常使用的温控器，照明设备，安防产品等。</p>
-<p>Thread基于IEEE 802.15.4通信标准建立，也可以看作是ZigBee的技术升级，目前已经适配ZigBee协议的设备可以在此基础上升级，从某种程度上说，设计成本低也是Thread一大优势。</p>
-<p>在当下物联网大融合的驱使下，各大厂商都在积极拥抱新技术。Matter的出现打破了物联网行业原有的格局，Thread的出现为实现智能家居和楼宇自动化提供可能。</p>
-<p>Matter over Thread在国内正处于起步阶段，专门做Thread技术的公司更是寥寥无几，HooRii Technology（和众科技）是一家专注于Thread技术的公司，是中国Open Thread技术的奠基人，Thread Group中国区技术带头人，近场通信领域专家。欢迎广大企业留言咨询Thread技术和解决方案。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/10/15/%E6%B5%85%E8%B0%88Matter-over-Thread/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -341,17 +348,14 @@
 <h5 id="2、分割线"><a href="#2、分割线" class="headerlink" title="2、分割线"></a>2、分割线</h5><p>使用三个或以上的 - 或者 * 表示，且这一行只有符号。（未识别可在 - 中间打空格）</p>
 <p>例如“—” &#x3D;&#x3D; “- - -”</p>
 <hr>
-<p>例如“**<em>” &#x3D;&#x3D; “</em> * *”</p>
-<hr>
-<h5 id="3-斜体、粗体与删除线"><a href="#3-斜体、粗体与删除线" class="headerlink" title="3. 斜体、粗体与删除线"></a>3. 斜体、粗体与删除线</h5><p><strong>斜体</strong>和<strong>粗体</strong>分别使用 ’*‘ 和 ’**‘ 表示</p>
-<p>例如* 斜体 * 与 ** 加粗 ** 再或者 *** 斜体加粗 ***</p>
-<p><em>斜体</em> 与 <strong>加粗</strong> 再或者 <em><strong>斜体加粗</strong></em></p>
-<p><strong>删除线</strong>使用两个 ~ 表示</p>
-<p>例如~~ 这是个句子 ~~</p>
-<p><del>这是一个句子</del></p>
-<h5 id="4-超链接"><a href="#4-超链接" class="headerlink" title="4.超链接"></a>4.超链接</h5><p> 超链接写法有两种</p>
-<p> “[第一种写法]（<a target="_blank" rel="noopener" href="https://www.baidu.com/%EF%BC%89&quot;">https://www.baidu.com/）&quot;</a> &#x3D;&#x3D;&gt;<a target="_blank" rel="noopener" href="https://www.baidu.com/">第一种写法</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/24/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -417,8 +421,10 @@
       </span>
     </span>
 </div>
+<!--
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
+-->
 
     </div>
   </footer>
