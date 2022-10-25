@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="照明控制方式  照明控制方式的类型是多种多样，常见的包括以下几种：     ■ ON&#x2F;OFF    这是最简单最普通的一种控制方式：开&#x2F;关，把灯点亮&#x2F;关闭。    ■ 0-10V    0-10V也是一种控制信号，用于控制灯具电源部分，让灯具可以接受  0-10V的信号，简单理解就是通过调电压来调亮度，比如说0V时，电源输出为零；而10V时，能够让灯具输出100%的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DMX512灯光控制原理与工程调试">
+<meta property="og:url" content="http://example.com/2022/10/25/DMX512%E7%81%AF%E5%85%89%E6%8E%A7%E5%88%B6%E5%8E%9F%E7%90%86%E4%B8%8E%E5%B7%A5%E7%A8%8B%E8%B0%83%E8%AF%95/index.html">
+<meta property="og:site_name" content="小何の世界">
+<meta property="og:description" content="照明控制方式  照明控制方式的类型是多种多样，常见的包括以下几种：     ■ ON&#x2F;OFF    这是最简单最普通的一种控制方式：开&#x2F;关，把灯点亮&#x2F;关闭。    ■ 0-10V    0-10V也是一种控制信号，用于控制灯具电源部分，让灯具可以接受  0-10V的信号，简单理解就是通过调电压来调亮度，比如说0V时，电源输出为零；而10V时，能够让灯具输出100%的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/221025/01.png">
+<meta property="og:image" content="http://example.com/images/221025/02.png">
+<meta property="og:image" content="http://example.com/images/221025/03.png">
+<meta property="og:image" content="http://example.com/images/221025/04.png">
+<meta property="og:image" content="http://example.com/images/221025/05.png">
+<meta property="og:image" content="http://example.com/images/221025/06.png">
+<meta property="article:published_time" content="2022-10-25T01:07:09.000Z">
+<meta property="article:modified_time" content="2022-10-25T01:28:38.080Z">
+<meta property="article:author" content="hg">
+<meta property="article:tag" content="调光">
+<meta property="article:tag" content="DMX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/221025/01.png">
+
+
+<link rel="canonical" href="http://example.com/2022/10/25/DMX512%E7%81%AF%E5%85%89%E6%8E%A7%E5%88%B6%E5%8E%9F%E7%90%86%E4%B8%8E%E5%B7%A5%E7%A8%8B%E8%B0%83%E8%AF%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/10/25/DMX512%E7%81%AF%E5%85%89%E6%8E%A7%E5%88%B6%E5%8E%9F%E7%90%86%E4%B8%8E%E5%B7%A5%E7%A8%8B%E8%B0%83%E8%AF%95/","path":"2022/10/25/DMX512灯光控制原理与工程调试/","title":"DMX512灯光控制原理与工程调试"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>DMX512灯光控制原理与工程调试 | 小何の世界</title>
+  
+
+
+
+
+
+
+
+  <!--点击效果-->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src ="/js/clicker.js" ></script>
+  
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">小何の世界</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="hg"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">hg</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/10/25/DMX512%E7%81%AF%E5%85%89%E6%8E%A7%E5%88%B6%E5%8E%9F%E7%90%86%E4%B8%8E%E5%B7%A5%E7%A8%8B%E8%B0%83%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="hg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小何の世界">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="DMX512灯光控制原理与工程调试 | 小何の世界">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DMX512灯光控制原理与工程调试
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-10-25 09:07:09 / 修改时间：09:28:38" itemprop="dateCreated datePublished" datetime="2022-10-25T09:07:09+08:00">2022-10-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%A9%B1%E5%8A%A8%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">驱动知识</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E9%A9%B1%E5%8A%A8%E7%9F%A5%E8%AF%86/DMX/" itemprop="url" rel="index"><span itemprop="name">DMX</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ul>
+<li><strong>照明控制方式</strong></li>
+</ul>
+<p>照明控制方式的类型是多种多样，常见的包括以下几种：</p>
+<blockquote>
+<p>   ■ ON&#x2F;OFF<br>    这是最简单最普通的一种控制方式：开&#x2F;关，把灯点亮&#x2F;关闭。<br>    ■ 0-10V<br>    0-10V也是一种控制信号，用于控制灯具电源部分，让灯具可以接受  0-10V的信号，简单理解就是通过调电压来调亮度，比如说0V时，电源输出为零；而10V时，能够让灯具输出100%的亮度。<br>    ■ DALI<br>    DALI系统主要是作为酒店、室内照明的控制系统。其最大的特点是单个灯具具有独立地址，可通过DALI系统对单灯或灯组进行精确的调光控制。<br>    ■ DMX512<br>    DMX512主要是用于舞台灯光和户外照明。  </p>
+</blockquote>
+<span id="more"></span>
+<p>具体的控制形式就是：WiFi、红外感应、遥控、人体感应等。</p>
+<ul>
+<li><strong>什么是 DMX512？</strong></li>
+</ul>
+<p><strong>DMX512英文是Digital Multiplex With 512 pieces of information (即多路数字传输)。</strong><br>DMX512协议最先是由USITT（美国剧院技术协会）发展成为从控制台用标准数字接口控制调光器的方式。与DALI用于表现静态效果刚好相反，DMX512主要用于表现被照物的动态效果，即DMX控制的灯是给人的感觉是一直在变动，以色彩变化为主，适合渲染气氛，所以一般应用在景观灯和舞台灯光。<br><img src="/../images/221025/01.png"></p>
+<blockquote>
+<p>▲DMX512控制系统示意：若干台RGB灯具，每一台灯具内部都包含1个DMX模块，该模块在同时接收到了电源供电和控制器信号的情况下，才会驱动LED灯珠亮暗变化，从而来调节颜色的变化。</p>
+</blockquote>
+<ul>
+<li><strong>DMX512的特点</strong></li>
+</ul>
+<p><strong>每个输出回路最大支持512通道</strong></p>
+<p>每个输出回路最大支持512通道，根据所带设备单个所占通道数的多少，决定了每个端口最大可带设备数量。<br><img src="/../images/221025/02.png"></p>
+<blockquote>
+<p>▲RGBW单像素灯具连接图</p>
+</blockquote>
+<p><strong>256 级调光灰度（0-255）</strong></p>
+<p>每一个DMX控制字节叫做一个指令帧，称作一个控制通道，可以控制灯光设备的一个或几个功能。一个DMX指令帧由1个开始位、8个数据位和2个结束位共ll位构成，采用单向异步串行传输。<br><img src="/../images/221025/03.png"><br>上图中虚线内控制指令中的S为开始位，宽度为一个比特，是受控灯具准备接收并解码控制数据的开始标志;E为结束位，宽度为两个比特，表示一个指令帧的结束。</p>
+<p>D0、D7为8位控制数据，其电平组合从0000—1111 1111共有256个状态(对应十进制数的0～255)，控制灯光的亮度时，可产生256个亮度等级，0000~ (0)对应灯光最暗，1111 1111(255)对应灯光最亮。DMX512指令的位宽(每比特宽度)是4 s，每帧宽度为44 弘s，传输速率为250 kbps。</p>
+<p><strong>标准的EIA485 接口</strong></p>
+<p>接线方式为总线式拓扑结构，不支持环形或星形网络。在同一总线上最多可以挂接32个节点。<br><img src="/../images/221025/04.png"></p>
+<blockquote>
+<p>各种形状的结构，DMX512要遵循第一种的总线结构，有头有尾。<br><img src="/../images/221025/05.png"><br>上图是广州的一个地埋灯项目，信号线在布线时比较随意（如右图），这会给后续工作增加很大的工作量。</p>
+</blockquote>
+<p><strong>传输速率250Kbps</strong></p>
+<p>比特率是指每秒传送的比特(bit)数，bps(Bit Per Second)。波特率跟施工规范是紧密相关的，高波特率信号抗干扰能力差。</p>
+<ul>
+<li><strong>DMX512注意事项</strong></li>
+</ul>
+<p>在实际操作中，分享几个经验，能减少一些控制问题：</p>
+<ol>
+<li><p>超五类网线的传输距离不超过100米；</p>
+</li>
+<li><p>控制器之间距离超出100米的情况，使用光纤；</p>
+</li>
+<li><p>EIA485协议规定每个中继器所带的节点数不超过32；</p>
+</li>
+<li><p>每个控制回路的布线必须遵循总线结构布局；</p>
+</li>
+<li><p>信号线与电源线要分管敷设。<br><img src="/../images/221025/06.png"></p>
+<blockquote>
+<p>墨菲定律，无论可能性多低，坏的情况总是会发生的。即使按步骤按标准去使用DMX512控制系统，也总是能遇到各种各样的问题。</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><strong>工程调试中的常见问题及解决方法</strong></li>
+</ul>
+<p><strong>一、整个控制回路灯具乱闪不受控怎么办？</strong></p>
+<ol>
+<li><p><em>确认控制器信号输出正常</em><br>当出现整个控制回路灯具不受控制时，有条件的情况下，首先用临时控制器单独测试该回路是否受控；</p>
+<p> a. 受控——原控制器信号输出有问题（或布线文件问题，或端口硬件问题，或端口接线问题）；</p>
+<p> b. 不受控——继续排查；</p>
+<p> c. 断掉第一支灯具之后的灯，单独测试第一支灯，来确定是控制器问题还是后面灯具带来的信号干扰影响；</p>
+</li>
+</ol>
+<p>此时往往第一支灯是OK的。</p>
+<ol start="2">
+<li><em>排查故障节点或灯具</em><br>在控制器信号输出正常的情况下，慢慢增加灯具，找出导致回路信号不正常的节点或灯具；通常采用“二分法”更快速。</li>
+</ol>
+<p><strong>二、某个控制回路个别灯具乱闪不受控</strong></p>
+<ol>
+<li><p><em>确认控制器布线是否到位</em><br>控制器的布线文件的布灯数量要与现场安装灯具数量一致。</p>
+</li>
+<li><p><em>用满布线文件测试</em><br>先用测试程序进行控制测试，也就是单端口布线文件从1-512个通道数布满。</p>
+<p> a. 乱闪灯具受控，此时对该回路灯具重新写码，问题即可解决；</p>
+<p> b. 个别灯具仍不受控，检测不受控灯具的信号输出端的接线是否正确或者灯具本身存在质量问题。</p>
+</li>
+</ol>
+<p><strong>三、什么情况下需要增加信号放大器？</strong></p>
+<p>信号放大器的一个作用是信号放大，把减弱的信号重新恢复到起点的强度；另一个作用即信号隔离，防止由灯具故障对控制器带来损伤。</p>
+<p>标准情况下，按照EIA485协议，每32个节点需要增加一台信号放大器。以避免在雨天或者其他情况下灯具信号变弱，从而出现灯具乱闪的现象。</p>
+<p><strong>四、加放大器的分控器输出端口可以带多少个节点？</strong></p>
+<p>在目前EIA485协议里面规定的标准，一般建议是32个节点增加一台放大器。但在实际操作中也可以超过60个节点，只是这样会存在信号不稳定的安全隐患。</p>
+<p><strong>五、如果信号线没有了屏蔽，信号还可以传输吗？如果可以，距离又是多远？</strong></p>
+<p>国内很多项目都是用的网线来做信号线，基本都是不带屏蔽的，传输距离肯定是会打折扣的，但具体还是要看用在什么项目来做定夺。最远距离一般都可以达到100m左右。</p>
+<p><strong>六、DMX各回路之间时间上不同步怎么办？</strong></p>
+<p>在同一台分工器有几个不同的端口，其中有些个别的端口输出信号会有明显的延时，这时需要做的就是把控制器的参数重置。因为出现这种状况的最大可能是控制器本身的参数问题导致了各个端口的输出频率不同，从而导致了各个端口的信号输出不同步。</p>
+<p><strong>七、传输速率降低了，同步性会受影响吗？</strong></p>
+<p>DMX512的传输速率就是250Kbps，这个是不能降的，如果传输速率降低，那就是另外一套系统了。另外一套系统会有另外一套协议，对于灯具的同步性不会有任何影响。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%B0%83%E5%85%89/" rel="tag"># 调光</a>
+              <a href="/tags/DMX/" rel="tag"># DMX</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/18/DALI%E4%B8%8EDALI2%E7%9A%84%E4%BB%8B%E7%BB%8D%E4%B8%8E%E5%BA%94%E7%94%A8/" rel="prev" title="DALI与DALI2的介绍与应用">
+                  <i class="fa fa-chevron-left"></i> DALI与DALI2的介绍与应用
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hg</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">16k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">19 分钟</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+-->
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
